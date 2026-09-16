@@ -1,0 +1,323 @@
+/* =============================================================
+   Componentes de medida, navegação e cartões
+   ============================================================= */
+
+/* ---------- barra de domínio ---------- */
+.meter { width: 100%; }
+.meter__track {
+  position: relative;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: oklch(100% 0 0 / 0.07);
+  overflow: hidden;
+}
+.meter__fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  transition: width var(--t-slow) var(--ease);
+}
+.meter__tick {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--bg);
+  opacity: 0.85;
+}
+.meter__labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6px;
+}
+.meter__tier { font-size: var(--fs-xs); color: var(--fg-muted); font-weight: 500; }
+.meter__value { font-size: var(--fs-xs); color: var(--accent); }
+
+/* ---------- arco ---------- */
+.arc { position: relative; display: grid; place-items: center; }
+.arc svg { position: absolute; inset: 0; }
+.arc__fill { transition: stroke-dasharray var(--t-slow) var(--ease); }
+.arc__center {
+  position: relative;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-num);
+  font-size: var(--fs-xs);
+  color: var(--fg-muted);
+  line-height: 1;
+}
+
+/* ---------- pips ---------- */
+.pips { display: flex; gap: 4px; flex: 1; }
+.pip {
+  height: 4px;
+  flex: 1;
+  border-radius: var(--r-pill);
+  background: oklch(100% 0 0 / 0.1);
+  transition: background var(--t) var(--ease), transform var(--t) var(--ease);
+}
+.pip--ok { background: var(--ok); }
+.pip--err { background: var(--err); }
+.pip--now { background: var(--accent); transform: scaleY(2); }
+
+/* ---------- estatística ---------- */
+.stat {
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-soft);
+  background: oklch(100% 0 0 / 0.02);
+}
+.stat__head { display: flex; align-items: center; gap: 6px; color: var(--fg-faint); }
+.stat__value {
+  font-size: var(--fs-xl);
+  margin-top: 6px;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.stat__sub { font-size: var(--fs-xs); color: var(--fg-faint); margin-top: 2px; }
+.stat--accent { border-color: var(--accent-dim); background: var(--accent-wash); }
+.stat--accent .stat__value { color: var(--accent-strong); }
+.stat--xp .stat__value { color: var(--xp); }
+
+/* ---------- constância ---------- */
+/* Uma coluna por semana, uma linha por dia da semana. O quadro tem largura
+   fixa: esticá-lo não acrescenta informação nenhuma. */
+.habit-wrap { display: inline-flex; flex-direction: column; gap: var(--s-3); }
+.habit {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 4px;
+  width: max-content;
+}
+.habit__cell {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background: oklch(100% 0 0 / 0.05);
+  border: 1px solid transparent;
+}
+.habit__legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  font-size: var(--fs-xs);
+}
+.habit__scale { display: inline-flex; gap: 3px; }
+.habit__cell--1 { background: var(--accent-wash); border-color: var(--accent-dim); }
+.habit__cell--2 { background: var(--accent-dim); }
+.habit__cell--3 { background: var(--accent); }
+
+/* ---------- sequência ---------- */
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px 5px 8px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  color: var(--fg-faint);
+  font-size: var(--fs-sm);
+}
+.streak--on { color: var(--xp); border-color: var(--xp-dim); background: oklch(45% 0.08 85 / 0.14); }
+
+/* =============================================================
+   Barra superior
+   ============================================================= */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--topbar-h);
+  backdrop-filter: blur(14px);
+  background: oklch(15.5% 0.018 268 / 0.78);
+  border-bottom: 1px solid var(--line-soft);
+}
+.topbar__in { height: 100%; display: flex; align-items: center; gap: var(--s-4); }
+
+.brand { display: flex; align-items: center; gap: 9px; margin-right: auto; }
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  background: var(--accent-wash);
+}
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: var(--fs-lg);
+  letter-spacing: -0.03em;
+}
+.brand__name span { color: var(--fg-faint); font-weight: 400; }
+
+.navlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  border-radius: var(--r-sm);
+  color: var(--fg-muted);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.navlink:hover { color: var(--fg); background: oklch(100% 0 0 / 0.05); }
+.navlink[aria-current='page'] { color: var(--accent-strong); background: var(--accent-wash); }
+.navlink__text { display: none; }
+@media (min-width: 640px) { .navlink__text { display: inline; } }
+
+.xpchip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px 5px 9px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  color: var(--fg-muted);
+}
+.xpchip b { color: var(--fg); font-family: var(--font-num); font-weight: 500; }
+
+/* =============================================================
+   Cartão de matéria
+   ============================================================= */
+.subjects {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.scard {
+  position: relative;
+  display: block;
+  padding: var(--s-4);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line-soft);
+  background:
+    radial-gradient(120% 90% at 100% 0%, var(--accent-wash), transparent 58%),
+    var(--surface);
+  overflow: hidden;
+  transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
+}
+.scard::after {
+  /* faixa de luz: é o "espectro" da matéria, e acende com o domínio */
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: calc(0.25 + var(--lit) * 0.75);
+  transform-origin: left;
+  transform: scaleX(calc(0.2 + var(--lit) * 0.8));
+  transition: transform var(--t-slow) var(--ease), opacity var(--t-slow) var(--ease);
+}
+.scard:hover { transform: translateY(-2px); border-color: var(--accent-dim); }
+
+.scard__top { display: flex; align-items: flex-start; gap: var(--s-3); }
+.scard__glyph {
+  display: grid; place-items: center;
+  width: 42px; height: 42px;
+  border-radius: var(--r-md);
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+  background: oklch(100% 0 0 / 0.03);
+  flex-shrink: 0;
+}
+.scard__name { font-size: var(--fs-lg); font-family: var(--font-display); font-weight: 600; }
+.scard__tag {
+  font-size: var(--fs-xs);
+  color: var(--fg-faint);
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.scard__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-4); }
+.scard__meta { font-size: var(--fs-xs); color: var(--fg-faint); }
+.scard__meta b { color: var(--fg-muted); font-weight: 500; font-family: var(--font-num); }
+
+/* =============================================================
+   Linha de habilidade
+   ============================================================= */
+.skill {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-3) var(--s-4);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-soft);
+  background: oklch(100% 0 0 / 0.018);
+  transition: border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.skill:hover { border-color: var(--accent-dim); background: oklch(100% 0 0 / 0.045); }
+.skill:active { transform: translateY(1px); }
+
+.skill__head { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+.skill__name { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-base); }
+.skill__blurb { font-size: var(--fs-sm); color: var(--fg-faint); margin-top: 3px; }
+.skill__main { grid-column: 1; grid-row: 1; }
+.skill__go { grid-column: 2; grid-row: 1; }
+.skill__meter { grid-column: 1 / -1; grid-row: 2; }
+.skill__go {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  color: var(--fg-muted);
+  transition: all var(--t-fast) var(--ease);
+}
+.skill:hover .skill__go { background: var(--accent); color: oklch(18% 0.04 var(--hue)); border-color: transparent; }
+
+.badge-due {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-num);
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  color: var(--xp);
+  border: 1px solid var(--xp-dim);
+}
+
+/* =============================================================
+   Cabeçalhos de seção
+   ============================================================= */
+.sect { margin-top: var(--s-9); }
+.sect__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.sect__title { font-size: var(--fs-xl); }
+.sect__note { font-size: var(--fs-sm); color: var(--fg-faint); }
+
+.area-label {
+  display: flex; align-items: center; gap: var(--s-3);
+  margin: var(--s-6) 0 var(--s-3);
+}
+.area-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+/* Em telas largas a linha de habilidade vira três colunas: o medidor
+   sobe para a mesma linha do nome e a lista deixa de ser uma pilha de cards. */
+@media (min-width: 780px) {
+  .skill {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 230px) auto;
+    padding: var(--s-4) var(--s-5);
+  }
+  /* o medidor vem antes do botão, na ordem em que se lê a linha */
+  .skill__main { grid-column: 1; grid-row: 1; }
+  .skill__meter { grid-column: 2; grid-row: 1; }
+  .skill__go { grid-column: 3; grid-row: 1; }
+}

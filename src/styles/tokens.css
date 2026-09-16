@@ -1,0 +1,107 @@
+/* =============================================================
+   Prisma — camada de tokens
+   Nada de valor cru fora daqui. Ver docs/DIRECAO-DE-ARTE.md
+   ============================================================= */
+
+:root {
+  /* ---- neutros frios (quase preto, levemente azul) ---- */
+  --bg:          oklch(15.5% 0.018 268);
+  --bg-deep:     oklch(11.5% 0.016 268);
+  --surface:     oklch(20.0% 0.020 268);
+  --surface-2:   oklch(24.0% 0.021 268);
+  --surface-3:   oklch(28.5% 0.022 268);
+  --line:        oklch(33.0% 0.022 268);
+  --line-soft:   oklch(26.0% 0.020 268);
+
+  --fg:          oklch(96.0% 0.008 268);
+  --fg-muted:    oklch(74.0% 0.016 268);
+  --fg-faint:    oklch(57.0% 0.018 268);
+
+  /* ---- matiz corrente: trocado por matéria, herdado por tudo ---- */
+  --hue: 268;
+  --accent:        oklch(76% 0.140 var(--hue));
+  --accent-strong: oklch(84% 0.160 var(--hue));
+  --accent-dim:    oklch(45% 0.090 var(--hue));
+  --accent-wash:   oklch(26% 0.050 var(--hue));
+  --accent-glow:   oklch(76% 0.140 var(--hue) / 0.22);
+
+  /* ---- semânticas (fora do sistema de matérias) ---- */
+  --ok:        oklch(80% 0.160 158);
+  --ok-dim:    oklch(42% 0.085 158);
+  --ok-wash:   oklch(27% 0.055 158);
+  --err:       oklch(71% 0.165 25);
+  --err-dim:   oklch(41% 0.100 25);
+  --err-wash:  oklch(27% 0.060 25);
+  --xp:        oklch(85% 0.140 85);
+  --xp-dim:    oklch(45% 0.080 85);
+
+  /* ---- tipografia ---- */
+  --font-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --font-text: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-num: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --fs-xs:  0.75rem;
+  --fs-sm:  0.8125rem;
+  --fs-md:  0.9375rem;
+  --fs-base: 1rem;
+  --fs-lg:  clamp(1.0625rem, 0.99rem + 0.35vw, 1.1875rem);
+  --fs-xl:  clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --fs-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --fs-3xl: clamp(1.875rem, 1.5rem + 1.9vw, 2.875rem);
+  --fs-hud: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+
+  /* ---- espaço ---- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
+  --s-9: 56px; --s-10: 72px;
+
+  /* ---- forma ---- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-pill: 999px;
+  --cut: 14px;            /* assinatura: corte do canto superior direito */
+
+  /* ---- movimento ---- */
+  --t-fast: 140ms;
+  --t: 220ms;
+  --t-slow: 420ms;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --ease-pop: cubic-bezier(.16, 1.2, .4, 1);
+
+  /* ---- layout ---- */
+  --maxw: 1160px;
+  --topbar-h: 60px;
+
+  color-scheme: dark;
+}
+
+/* Os tokens derivados precisam ser redeclarados em todo elemento que troca
+   o matiz: uma custom property é resolvida onde é declarada, então um
+   --accent declarado só em :root ficaria preso ao matiz de :root. */
+[data-subject] {
+  --accent:        oklch(76% 0.140 var(--hue));
+  --accent-strong: oklch(84% 0.160 var(--hue));
+  --accent-dim:    oklch(45% 0.090 var(--hue));
+  --accent-wash:   oklch(26% 0.050 var(--hue));
+  --accent-glow:   oklch(76% 0.140 var(--hue) / 0.22);
+}
+
+/* Matizes das 12 matérias: L e C fixos no bloco acima, só o ângulo muda.
+   Ordem escolhida para que vizinhos na grade não se confundam. */
+[data-subject='matematica']  { --hue: 258; }
+[data-subject='fisica']      { --hue: 222; }
+[data-subject='quimica']     { --hue: 192; }
+[data-subject='biologia']    { --hue: 158; }
+[data-subject='geografia']   { --hue: 132; }
+[data-subject='historia']    { --hue: 62;  }
+[data-subject='filosofia']   { --hue: 38;  }
+[data-subject='sociologia']  { --hue: 18;  }
+[data-subject='portugues']   { --hue: 352; }
+[data-subject='literatura']  { --hue: 326; }
+[data-subject='ingles']      { --hue: 300; }
+[data-subject='redacao']     { --hue: 282; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 1ms; --t: 1ms; --t-slow: 1ms; }
+}
